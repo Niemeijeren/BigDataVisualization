@@ -67,9 +67,7 @@ svg.selectAll("text")
 svg.append("text")             
   .attr("y", - margin.left + (0.02*width) ) //placering på x-aksen
   .attr("x",0 - (height / 2)) //placering på y-aksen
-  .attr("dx, "1em)
-  .style("text-anchor", "middle")
-  .text("# of Tweets");   
+  .attr("dx", "1em")
   .style("text-anchor", "middle")
   .text("Date");
 
@@ -78,7 +76,7 @@ svg.append("text")
   .attr("transform", "rotate(-90)") //Text vertikalt
   .attr("y", - margin.left + (0.02*width) ) //placering på x-aksen
   .attr("x",0 - (height / 2)) //placering på y-aksen
-  .attr("dy", "2em")
+  .attr("dy", "1em")
   .style("text-anchor", "middle")
   .text("# of Tweets");   
 
