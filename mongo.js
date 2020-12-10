@@ -43,7 +43,7 @@ app.get('/getMostActiveHeadOfState', function(req, res) {
   res.send(mostActiveHeadOfState);
 })
 
-app.get('/getCountryCount', function(req, res) {
+app.get('/getLanguageCount', function(req, res) {
   res.send(langCount);
 });
 

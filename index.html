@@ -10,14 +10,21 @@
 </head>
 
 <body>
-    <div style="text-align: center;">
+    <h1 style="text-align:center;">Historical Data</h1>
+    <div class="graphs" style="text-align: center;">
+    <div style="position:absolute; left: 10%;">
         <h3>Tweets based on Language</h3>
         <svg id="countries" ></svg>
     </div>
+    <script src="language.js"></script>
+    <div style="position: absolute;left: 50%;">
+        <h3>Tweets based on Country</h3>
+        <svg id="languages" ></svg>
+    </div>
     <script src="country.js"></script>
+</div>
 </body>
 </html>
-
 <style>
     .tick { 
       font: 14px sans-serif; 
