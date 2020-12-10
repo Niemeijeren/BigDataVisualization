@@ -96,13 +96,15 @@ svg.append("text")
 //APPEND is to append to the html object
 //append information to chart
 
+//draw y-axis
 svg.append("g")
   .attr("transform", "translate("+ margin.left +",0 )")
   .call(d3.axisLeft(y));
 
+//draw x-axis
 svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-  .call(d3.axisBottom(x).tickSizeOuter(0));
+  .call(d3.axisBottom(x));
 
 svg
   .append('g')
