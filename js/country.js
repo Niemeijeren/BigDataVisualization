@@ -1,25 +1,11 @@
-const data = [
-  { lang: 'en', count: 1039517 },
-  { lang: 'es', count: 290771 },
-  { lang: 'de', count: 188789 },
-  { lang: 'fr', count: 107169 },
-  { lang: 'tr', count: 102150 },
-  { lang: 'und', count: 98638 },
-  { lang: 'in', count: 94981 },
-  { lang: 'pt', count: 80230 },
-  { lang: 'th', count: 47093 },
-  { lang: 'nl', count: 42642 },
-  { lang: 'it', count: 30693 },
-  { lang: 'ja', count: 29401 },
-  { lang: 'hi', count: 26915 },
-  { lang: 'ca', count: 11613 },
-  { lang: 'tl', count: 7548 },
-];
-
 var width = 900;
 var height = 600;
 var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 
+
+// Retrieve the data from MongoDB.
+// We wrap this around the entire thing to use the data value throughout the rest of the code.
+d3.json("http://localhost:3000/getCountryCount").then(data => {;
 //Select the html-element, and set size of it
 var svg = d3.select('#countries')
   .attr('height', height - margin.top - margin.bottom)
@@ -105,5 +91,4 @@ svg.append("g")
 svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
   .call(d3.axisBottom(x));
-
-svg.node();
+})
