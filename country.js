@@ -27,59 +27,73 @@ var svg = d3.select('#countries')
   .attr('viewBox', [0, 0, width, height])
   .attr('class', 'chart');
 
-//axes
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//axis
 var x, y;
 
 x = d3.scaleBand()
-  .domain(d3.range(data.length)) // number of columns = length of array
-  .range([margin.left, width - margin.right]) // visually stretches in between the margins of the element
-  .padding(0.5);  // padding between elements
+  .domain(data.map(d => d.lang)) // number of columns = pr lang (number of objects)
+  .rangeRound([margin.left, width - margin.right]) // visually stretches in between the margins of the element
+  .padding(0.1);  // padding between elements
 
 y = d3.scaleLinear()
-  .domain(([0, (d3.max(data, function(element) { return element.count ;} ))])) //set height of Y-axis to max value of elements
+  .domain(([0, (d3.max(data, function(element) { return element.count + 63000 ;}))])) //set height of Y-axis to max value of elements
   .range([height - margin.bottom, margin.top]); //how tall is the graph
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Set the bars in plot
 svg.selectAll("rect")
   .data(data.sort((a, b) => d3.descending(a.count, b.count))) //sort by descending
   .join('rect') //Selection of elements from '.data'
-    .attr('x', (element, i) => x(i)) //where to place each element (on its own number position)
+    .attr('x', element => x(element.lang)) //where to place each element (on its own lang)
     .attr('y', (element) => y(element.count)) //show height of each element by element.count
     .attr('height', element => y(0) - y(element.count))
     .attr('width', x.bandwidth()) // set width of each band (column)
     .attr('fill', 'royalblue'); //color of columns
 
 
-//numbers on each elent top
-svg.selectAll("text")
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//numbers on top of elements
+
+svg.selectAll("text.count") //class text.count
   .data(data)
   .join("text") // for each element
-    .attr('x', (element, i) => x(i)) //where to place each element (on its own number position)
+    .attr('x', (element) => x(element.lang)) //where to place each element (on its own lang)
     .attr('y', (element) => y(element.count)) //show height of each element by element.count
-    .attr("dx", -5) //x placering i forhold til enkelte bar
-    .attr("dy", "-.3em")  //y placering af text i forhold til enkelt bar
+    .attr("dx", 3) //x placering i forhold til enkelte bar
+    .attr("dy", -5)  //y placering af text i forhold til enkelt bar
     .attr("text-anchor", "start") // anchor at start of bar
+    .attr('class', 'score') //class count
     .text(function(element) { return element.count ;}); //brug count som text
 
 
-//APPEND is to append to the html object
-// text label for the x axis
-svg.append("text")             
-  .attr("y", - margin.left + (0.02*width) ) //placering på x-aksen
-  .attr("x",0 - (height / 2)) //placering på y-aksen
-  .attr("dx", "1em")
-  .style("text-anchor", "middle")
-  .text("Date");
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//LABELS FOR AXIS
 
 // text label for the y axis
 svg.append("text")
+  .attr("class", "y-axis-label") //giv den en klasse for overskuelighed og debugging
   .attr("transform", "rotate(-90)") //Text vertikalt
-  .attr("y", - margin.left + (0.02*width) ) //placering på x-aksen
+  .attr("y", - margin.left + (0.015*width) ) //placering på x-aksen
   .attr("x",0 - (height / 2)) //placering på y-aksen
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .text("# of Tweets");   
+  .style("font-size", "18px")
+  .text("# of Tweets");
 
+   // text label for the x axis
+   svg.append("text")
+   .attr("class", "x-axis-label")
+   .attr("text-anchor", "middle")
+   .attr("x", width/2)
+   .attr("y", height - 6)
+   .style("font-size", "18px")
+   .text("Language used in tweet");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//APPEND is to append to the html object
 //append information to chart
 
 svg.append("g")
@@ -88,7 +102,7 @@ svg.append("g")
 
 svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-  .call(d3.axisBottom(x));
+  .call(d3.axisBottom(x).tickSizeOuter(0));
 
 svg
   .append('g')
