@@ -7,7 +7,7 @@ var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
 d3.json("http://localhost:3000/getLanguageCount").then(data => {;
 //Select the html-element, and set size of it
-var svg = d3.select('#countries')
+var svg = d3.select('#languages')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height])
@@ -52,6 +52,7 @@ svg.selectAll("text.count") //class text.count
     .attr("dy", -5)  //y placering af text i forhold til enkelt bar
     .attr("text-anchor", "start") // anchor at start of bar
     .attr('class', 'score') //class count
+    .style("font-size", "13px")
     .text(function(element) { return element.count ;}); //brug count som text
 
 

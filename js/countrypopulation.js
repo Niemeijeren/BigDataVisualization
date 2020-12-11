@@ -1,13 +1,14 @@
-var width = 1000;
+var width = 800;
 var height = 500;
 var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 
 
 // Retrieve the data from MongoDB.
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
-d3.json("http://localhost:3000/getCountryCount").then(data => {;
+d3.json("http://localhost:3000/getCountryCountRelative").then(data => {;
 //Select the html-element, and set size of it
-var svg = d3.select('#countries')
+console.log(data)
+var svg = d3.select('#countriesPopulation')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height])
@@ -23,7 +24,7 @@ x = d3.scaleBand()
   .padding(0.1);  // padding between elements
 
 y = d3.scaleLinear()
-  .domain(([0, (d3.max(data, function(element) { return element.count + 500}))])) //set height of Y-axis to max value of elements
+  .domain(([0, (d3.max(data, function(element) { return element.count + 0.000005}))])) //set height of Y-axis to max value of elements
   .range([height - margin.bottom, margin.top]); //how tall is the graph
 
 
