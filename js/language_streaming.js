@@ -5,25 +5,28 @@ var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 
 // Retrieve the data from MongoDB.
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
-d3.json("http://localhost:3000/getCountryCount").then(data => {;
+setInterval(() => {
+d3.json("http://localhost:3000/getStreamedLanguages").then(data => {;
 //Select the html-element, and set size of it
-var svg = d3.select('#countries')
+console.log(data)
+d3.select('#stream_graph').select("svg").remove()
+var svg = d3.select('#stream_graph')
+  .append("svg")
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height])
   .attr('class', 'chart');
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //axis
 var x, y;
 
 x = d3.scaleBand()
-  .domain(data.map(d => d.country)) // number of columns = pr lang (number of objects)
+  .domain(data.map(d => d.lang)) // number of columns = pr lang (number of objects)
   .rangeRound([margin.left, width - margin.right]) // visually stretches in between the margins of the element
   .padding(0.1);  // padding between elements
 
 y = d3.scaleLinear()
-  .domain(([0, (d3.max(data, function(element) { return element.count + 500}))])) //set height of Y-axis to max value of elements
+  .domain(([0, (d3.max(data, function(element) { return element.count + 0.000005}))])) //set height of Y-axis to max value of elements
   .range([height - margin.bottom, margin.top]); //how tall is the graph
 
 
@@ -32,7 +35,7 @@ y = d3.scaleLinear()
 svg.selectAll("rect")
   .data(data.sort((a, b) => d3.descending(a.count, b.count))) //sort by descending
   .join('rect') //Selection of elements from '.data'
-    .attr('x', element => x(element.country)) //where to place each element (on its own lang)
+    .attr('x', element => x(element.lang)) //where to place each element (on its own lang)
     .attr('y', (element) => y(element.count)) //show height of each element by element.count
     .attr('height', element => y(0) - y(element.count))
     .attr('width', x.bandwidth()) // set width of each band (column)
@@ -45,7 +48,7 @@ svg.selectAll("rect")
 svg.selectAll("text.count") //class text.count
   .data(data)
   .join("text") // for each element
-    .attr('x', (element) => x(element.country)) //where to place each element (on its own lang)
+    .attr('x', (element) => x(element.lang)) //where to place each element (on its own lang)
     .attr('y', (element) => y(element.count)) //show height of each element by element.count
     .attr("dx", 3) //x placering i forhold til enkelte bar
     .attr("dy", -5)  //y placering af text i forhold til enkelt bar
@@ -92,3 +95,4 @@ svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
   .call(d3.axisBottom(x));
 })
+}, 5000);

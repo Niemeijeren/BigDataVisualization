@@ -1,13 +1,13 @@
-var width = 800;
+var width = 1000;
 var height = 500;
 var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 
 
 // Retrieve the data from MongoDB.
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
-d3.json("http://localhost:3000/getCountryCount").then(data => {;
+d3.json("http://localhost:3000/getStreamedLocations").then(data => {;
 //Select the html-element, and set size of it
-var svg = d3.select('#countries')
+var svg = d3.select('#streaming_languages')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height])

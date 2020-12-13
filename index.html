@@ -23,7 +23,7 @@
                     <script src="language.js"></script>
           </div>
       </div>
-      <div  class="row">
+      <div class="row">
         <div class="col-6" name="">
             <h3 class="text-center">Tweets based on Country</h3>
             <svg id="countries" ></svg>
@@ -31,11 +31,36 @@
       </div>
 
       <div class="col-6" name="">
-        <h3 class="text-center">Tweets based on Country relative to population</h3>
+        <h3 class="text-center">Tweets based on Country & population</h3>
         <svg id="countriesPopulation" ></svg>
     <script src="countrypopulation.js"></script>
   </div>
       </div>
+      <!-- STREAMING DATA GRAPHS -->
+      <div class="row">
+        <h1 style="text-align:center; font-weight: 700;">Streaming Data</h1>
+      </div>
+      <div class="row justify-content-center" name="">
+        <div class="col-auto" name="">
+                  <h3 class="text-center">Streamed tweets based on Language</h3>
+                  <div id="stream_graph">
+                    <svg id="streaming_languages"></svg>
+                  </div>
+                  <script src="language_streaming.js"></script>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-6" name="">
+          <h3 class="text-center">Streamed tweets based on Country</h3>
+          <svg id="streaming_countries" ></svg>
+    </div>
+
+    <div class="col-6" name="">
+      <h3 class="text-center">Streamed tweets based on Country & population</h3>
+      <svg id="streaming_countriesPopulation" ></svg>
+</div>
+    </div>
+    
     </div>
 </div>
 </body>
