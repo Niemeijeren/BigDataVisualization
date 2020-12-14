@@ -86,28 +86,6 @@ var espanaRelative;
         });
     });
     }, 1000);
-
-      // MongoDB connect to database for new session.
-      MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("BigData");
-        // Get Most active screen_name. It takes a moment to retrieve it.
-        dbo.collection("Streamed_Locations").find({}).toArray(function(err, result5) {
-          if(err) throw err;
-          countryCount = result5.slice(0,10);
-          usRelative = (result5[0].count / 330695400)
-          ukRelative = result5[1].count / 66650000
-          brasilRelative = result5[2].count / 209500000
-          indiaRelative = result5[3].count / 1380004385
-          turkeyRelative = result5[4].count / 84733150
-          indonesiaRelative = result5[5].count / 274795584
-          mexicoRelative = result5[5].count  / 129528514
-          deutschlandRelative = result5[5].count / 83902518
-          canadaRelative = result5[6].count / 37887917
-          espanaRelative = result5[6].count / 46762763
-          db.close();
-        });
-    });
   
   
     
@@ -128,7 +106,8 @@ app.get('/getCountryCount', function(req, res) {
   res.send(countryCount);
 })
 
-app.get('/getCountryCountRelative', function(req, res) { 
+app.get('/getCountryCountRelative', function(req, res) {
+  
   // We send the updated array with the js objects.
   res.send([
     {"country": "United States", "count": usRelative}, 
@@ -143,7 +122,6 @@ app.get('/getCountryCountRelative', function(req, res) {
     {"country": "España", "count": espanaRelative},
   ]);
 })
-
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + "/index.html")
