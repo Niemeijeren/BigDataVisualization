@@ -22,15 +22,12 @@ var deutschlandRelative;
 var canadaRelative;
 var espanaRelative;
 
-
-	
+try {
     // MongoDB connect to database.
     MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-        if (err) throw err;
         var dbo = db.db("BigData");
         // Get lang and count.
         dbo.collection("CountryCount").find({}).toArray(function(err, result) {
-        if(err) throw err;
         result[0].count 
         langCount = result.slice(0,10);
         db.close();
@@ -39,11 +36,9 @@ var espanaRelative;
 
     // MongoDB connect to database for new session.
     MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-      if (err) throw err;
       var dbo = db.db("BigData");
       // Get Most active screen_name. It takes a moment to retrieve it.
       dbo.collection("Locations").find({}).toArray(function(err, result2) {
-        if(err) throw err;
         countryCount = result2.slice(0,10);
         usRelative = (result2[0].count / 330695400)
         ukRelative = result2[1].count / 66650000
@@ -62,11 +57,9 @@ var espanaRelative;
     // MongoDB connect to database for new session.
     setInterval(() => {
       MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-        if (err) throw err;
         var dbo = db.db("BigData");
         // Get Most active screen_name. It takes a moment to retrieve it.
         dbo.collection("Streamed_Languages").find({}).sort({count: -1}).toArray(function(err, result3) {
-          if(err) throw err;
           streamed_Languages = result3.splice(0, 10);
           db.close();
         });
@@ -76,18 +69,18 @@ var espanaRelative;
     // MongoDB connect to database for new session.
     setInterval(() => {
       MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-        if (err) throw err;
         var dbo = db.db("BigData");
         // Get Most active screen_name. It takes a moment to retrieve it.
         dbo.collection("Streamed_Locations").find({}).sort({count: -1}).toArray(function(err, result4) {
-          if(err) throw err;
           streamed_Locations = result4.splice(0, 10);
           db.close();
         });
     });
     }, 1000);
   
-  
+  } catch(error) {
+    console.log(error);
+  }  
     
   
 app.get('/getStreamedLanguages', function(req, res) {
@@ -107,7 +100,6 @@ app.get('/getCountryCount', function(req, res) {
 })
 
 app.get('/getCountryCountRelative', function(req, res) {
-  
   // We send the updated array with the js objects.
   res.send([
     {"country": "United States", "count": usRelative}, 
