@@ -1,4 +1,4 @@
-var width = 1000;
+var width = 800;
 var height = 500;
 var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 
@@ -22,7 +22,7 @@ setInterval(() => {
             var x, y;
 
             x = d3.scaleBand()
-              .domain(data.map(d => d.lang)) // number of columns = pr lang (number of objects)
+              .domain(data.map(d => d.country)) // number of columns = pr lang (number of objects)
               .rangeRound([margin.left, width - margin.right]) // visually stretches in between the margins of the element
               .padding(0.1);  // padding between elements
 
@@ -36,7 +36,7 @@ setInterval(() => {
             svg.selectAll("rect")
               .data(data.sort((a, b) => d3.descending(a.count, b.count))) //sort by descending
               .join('rect') //Selection of elements from '.data'
-                .attr('x', element => x(element.lang)) //where to place each element (on its own lang)
+                .attr('x', element => x(element.country)) //where to place each element (on its own lang)
                 .attr('y', (element) => y(element.count)) //show height of each element by element.count
                 .attr('height', element => y(0) - y(element.count))
                 .attr('width', x.bandwidth()) // set width of each band (column)
@@ -49,7 +49,7 @@ setInterval(() => {
             svg.selectAll("text.count") //class text.count
               .data(data)
               .join("text") // for each element
-                .attr('x', (element) => x(element.lang)) //where to place each element (on its own lang)
+                .attr('x', (element) => x(element.country)) //where to place each element (on its own lang)
                 .attr('y', (element) => y(element.count)) //show height of each element by element.count
                 .attr("dx", 3) //x placering i forhold til enkelte bar
                 .attr("dy", -5)  //y placering af text i forhold til enkelt bar

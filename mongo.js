@@ -6,6 +6,7 @@ var mostActiveHeadOfState;
 var langCount;
 var countryCount;
 var streamed_Languages;
+var streamed_Locations;
 // MongoDB setup
 var MongoClient = require('mongodb').MongoClient;
 var MongoUrl = "mongodb+srv://InterCare:Julian123@intercarebachelor.lctyd.azure.mongodb.net/BigData?retryWrites=true&w=majority";
@@ -70,7 +71,21 @@ var espanaRelative;
           db.close();
         });
     });
-    }, 5000);
+    }, 1000);
+
+    // MongoDB connect to database for new session.
+    setInterval(() => {
+      MongoClient.connect(MongoUrl, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("BigData");
+        // Get Most active screen_name. It takes a moment to retrieve it.
+        dbo.collection("Streamed_Locations").find({}).sort({count: -1}).toArray(function(err, result4) {
+          if(err) throw err;
+          streamed_Locations = result4.splice(0, 10);
+          db.close();
+        });
+    });
+    }, 1000);
   
   
     
@@ -79,8 +94,8 @@ app.get('/getStreamedLanguages', function(req, res) {
   res.send(streamed_Languages);
 })
 
-app.get('/getMostActiveHeadOfState', function(req, res) {
-  res.send(mostActiveHeadOfState);
+app.get('/getStreamedLocations', function(req, res) {
+  res.send(streamed_Locations);
 })
 
 app.get('/getLanguageCount', function(req, res) {
