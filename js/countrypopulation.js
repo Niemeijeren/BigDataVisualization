@@ -67,7 +67,7 @@ svg.append("text")
   .attr("x",0 - (height / 2)) //placering på y-aksen
   .attr("dy", "1em")
   .style("text-anchor", "middle")
-  .style("font-size", "13px")
+  .style("font-size", "18px")
   .text("# of Tweets");
 
    // text label for the x axis
