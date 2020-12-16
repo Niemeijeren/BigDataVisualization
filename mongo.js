@@ -70,10 +70,10 @@ try {
         indiaRelative = (result2[3].count / 1380004385) * 1000000
         turkeyRelative = (result2[4].count / 84733150) * 1000000
         indonesiaRelative = (result2[5].count / 274795584) * 1000000
-        mexicoRelative = (result2[5].count  / 129528514) * 1000000
-        deutschlandRelative = (result2[5].count / 83902518) * 1000000
-        canadaRelative = (result2[6].count / 37887917) * 1000000
-        espanaRelative = (result2[6].count / 46762763) * 1000000
+        mexicoRelative = (result2[6].count  / 129528514) * 1000000
+        deutschlandRelative = (result2[7].count / 83902518) * 1000000
+        canadaRelative = (result2[8].count / 37887917) * 1000000
+        espanaRelative = (result2[9].count / 46762763) * 1000000
         db.close();
       });
   });
@@ -96,13 +96,12 @@ try {
         var dbo = db.db("BigData");
         // Get Most active screen_name. It takes a moment to retrieve it.
         dbo.collection("Streamed_Locations").find({}).sort({count: -1}).toArray(function(err, result4) {
-          if(result4[i] != undefined || null) {
-              streamed_Locations = result4.splice(0, 10);
-              countryPopulationTweets = [];
-              for(var i=0; i<streamed_Locations.length; i++) {
-                var relation = streamed_Locations[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000
-                countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((relation + Number.EPSILON) * 100) / 100)})
-              }
+          streamed_Locations = result4 != undefined ? result4.splice(0, 10) : [];
+          countryPopulationTweets = [];
+          for(var i=0; i<streamed_Locations.length; i++) {
+            if(result4[i] != undefined || result4[i] != null) {
+              countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((streamed_Locations[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000) * 100) / 100)})
+            }
           }
           db.close();
         });
