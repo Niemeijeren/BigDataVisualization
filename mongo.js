@@ -96,14 +96,13 @@ try {
         var dbo = db.db("BigData");
         // Get Most active screen_name. It takes a moment to retrieve it.
         dbo.collection("Streamed_Locations").find({}).sort({count: -1}).toArray(function(err, result4) {
-          streamed_Locations = result4.splice(0, 10);
-          countryPopulationTweets = [];
-          for(var i=0; i<streamed_Locations.length; i++) {
-            if(result4[i] != undefined || null) {
+          if(result4[i] != undefined || null) {
+              streamed_Locations = result4.splice(0, 10);
+              countryPopulationTweets = [];
+              for(var i=0; i<streamed_Locations.length; i++) {
                 var relation = streamed_Locations[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000
-              countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((relation + Number.EPSILON) * 100) / 100)})
-            }
-            
+                countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((relation + Number.EPSILON) * 100) / 100)})
+              }
           }
           db.close();
         });
