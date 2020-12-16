@@ -91,5 +91,10 @@ svg.append("g")
 //draw x-axis
 svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-  .call(d3.axisBottom(x));
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("dx", ".8em")
+  .attr("dy", "0.8em")
+  .attr("transform", "rotate(-20)");
 })

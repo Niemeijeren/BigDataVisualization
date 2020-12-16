@@ -85,10 +85,15 @@ svg.append("text")
 //draw y-axis
 svg.append("g")
   .attr("transform", "translate("+ margin.left +",0 )")
-  .call(d3.axisLeft(y));
-
+  .call(d3.axisLeft(y));                                                                
+                                                               
 //draw x-axis
 svg.append("g")
   .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-  .call(d3.axisBottom(x));
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("dx", ".8em")
+  .attr("dy", "0.8em")  
+  .attr("transform", "rotate(-20)");
 })
