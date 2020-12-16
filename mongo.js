@@ -40,16 +40,16 @@ try {
       // Get Most active screen_name. It takes a moment to retrieve it.
       dbo.collection("Locations").find({}).toArray(function(err, result2) {
         countryCount = result2.slice(0,10);
-        usRelative = (result2[0].count / 330695400)
-        ukRelative = result2[1].count / 66650000
-        brasilRelative = result2[2].count / 209500000
-        indiaRelative = result2[3].count / 1380004385
-        turkeyRelative = result2[4].count / 84733150
-        indonesiaRelative = result2[5].count / 274795584
-        mexicoRelative = result2[5].count  / 129528514
-        deutschlandRelative = result2[5].count / 83902518
-        canadaRelative = result2[6].count / 37887917
-        espanaRelative = result2[6].count / 46762763
+        usRelative = (result2[0].count / 330695400) * 1000000
+        ukRelative = (result2[1].count / 66650000) * 1000000
+        brasilRelative = (result2[2].count / 209500000) * 1000000
+        indiaRelative = (result2[3].count / 1380004385) * 1000000
+        turkeyRelative = (result2[4].count / 84733150) * 1000000
+        indonesiaRelative = (result2[5].count / 274795584) * 1000000
+        mexicoRelative = (result2[5].count  / 129528514) * 1000000
+        deutschlandRelative = (result2[5].count / 83902518) * 1000000
+        canadaRelative = (result2[6].count / 37887917) * 1000000
+        espanaRelative = (result2[6].count / 46762763) * 1000000
         db.close();
       });
   });
@@ -102,16 +102,16 @@ app.get('/getCountryCount', function(req, res) {
 app.get('/getCountryCountRelative', function(req, res) {
   // We send the updated array with the js objects.
   res.send([
-    {"country": "United States", "count": usRelative}, 
-    {"country": "United Kingdom", "count": ukRelative},
-    {"country": "Brasil", "count": brasilRelative},
-    {"country": "India", "count": indiaRelative},
-    {"country": "Türkiye", "count": turkeyRelative},
-    {"country": "Indonesia", "count": indonesiaRelative},
-    {"country": "México", "count": mexicoRelative},
-    {"country": "Deutschland", "count": deutschlandRelative},
-    {"country": "Canada", "count": canadaRelative},
-    {"country": "España", "count": espanaRelative},
+    {"country": "United States", "count": Math.round((usRelative + Number.EPSILON) * 100) / 100}, 
+    {"country": "United Kingdom", "count": Math.round((ukRelative + Number.EPSILON) * 100) / 100},
+    {"country": "Brasil", "count": Math.round((brasilRelative + Number.EPSILON) * 100) / 100},
+    {"country": "India", "count": Math.round((indiaRelative + Number.EPSILON) * 100) / 100},
+    {"country": "Türkiye", "count": Math.round((turkeyRelative + Number.EPSILON) * 100) / 100},
+    {"country": "Indonesia", "count": Math.round((indonesiaRelative + Number.EPSILON) * 100) / 100},
+    {"country": "México", "count": Math.round((mexicoRelative + Number.EPSILON) * 100) / 100},
+    {"country": "Deutschland", "count": Math.round((deutschlandRelative + Number.EPSILON) * 100) / 100},
+    {"country": "Canada", "count": Math.round((canadaRelative + Number.EPSILON) * 100) / 100},
+    {"country": "España", "count": Math.round((espanaRelative + Number.EPSILON) * 100) / 100},
   ]);
 })
 
