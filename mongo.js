@@ -100,7 +100,8 @@ try {
           countryPopulationTweets = [];
           for(var i=0; i<streamed_Locations.length; i++) {
             if(result4[i] != undefined || null) {
-              countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((result4[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000) * 100) / 100)})
+                var relation = streamed_Locations[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000
+              countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((relation + Number.EPSILON) * 100) / 100)})
             }
             
           }
