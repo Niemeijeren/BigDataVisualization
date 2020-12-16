@@ -1,6 +1,6 @@
 var width = 800;
 var height = 500;
-var margin = { top : 50, bottom : 50, left : 50, right : 50 };
+var margin = { top : 20, bottom : 80, left : 50, right : 50 };
 
 
 // Retrieve the data from MongoDB.
@@ -10,7 +10,7 @@ d3.json("http://localhost:3000/getCountryCount").then(data => {;
 var svg = d3.select('#countries')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
-  .attr('viewBox', [0, 0, width, height])
+  .attr('viewBox', [0, 30, width, height])
   .attr('class', 'chart');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ x = d3.scaleBand()
 
 y = d3.scaleLinear()
   .domain(([0, (d3.max(data, function(element) { return element.count + 500}))])) //set height of Y-axis to max value of elements
-  .range([height - margin.bottom, margin.top]); //how tall is the graph
+  .range([height - margin.top, margin.bottom]); //how tall is the graph
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ svg.append("text")
    .attr("class", "x-axis-label")
    .attr("text-anchor", "middle")
    .attr("x", width/2)
-   .attr("y", height - 6)
+   .attr("y", height + 10)
    .style("font-size", "18px")
    .text("Tweet country origin");
 

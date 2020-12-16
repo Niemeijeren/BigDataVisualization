@@ -10,7 +10,7 @@ d3.json("http://localhost:3000/getCountryCountRelative").then(data => {;
 var svg = d3.select('#countriesPopulation')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
-  .attr('viewBox', [0, 0, width, height])
+  .attr('viewBox', [0, 30, width, height])
   .attr('class', 'chart');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ svg.append("text")
    .attr("class", "x-axis-label")
    .attr("text-anchor", "middle")
    .attr("x", width/2)
-   .attr("y", height - 6)
+   .attr("y", height + 10)
    .style("font-size", "18px")
    .text("Tweet country origin");
 
