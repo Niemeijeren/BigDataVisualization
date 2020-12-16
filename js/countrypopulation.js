@@ -7,7 +7,6 @@ var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
 d3.json("http://localhost:3000/getCountryCountRelative").then(data => {;
 //Select the html-element, and set size of it
-console.log(data)
 var svg = d3.select('#countriesPopulation')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)

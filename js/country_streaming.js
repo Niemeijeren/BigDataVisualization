@@ -7,7 +7,7 @@ var margin = { top : 50, bottom : 50, left : 50, right : 50 };
 // We wrap this around the entire thing to use the data value throughout the rest of the code.
 setInterval(() => {
     d3.json("http://localhost:3000/getStreamedLocations").then(data => {;
-        if(data.length != 0){
+        if(data.length == 10){
             //Select the html-element, and set size of it
             console.log(data)
             d3.select('#country_stream').select("svg").remove()
