@@ -11,6 +11,30 @@ var streamed_Locations;
 var MongoClient = require('mongodb').MongoClient;
 var MongoUrl = "mongodb+srv://InterCare:Julian123@intercarebachelor.lctyd.azure.mongodb.net/BigData?retryWrites=true&w=majority";
 
+var countryPopulationTweets = [];
+var countryPopulationMap = new Map();
+countryPopulationMap.set("United States", 330695400);
+countryPopulationMap.set("United Kingdom", 66650000);
+countryPopulationMap.set("Brasil", 209500000);
+countryPopulationMap.set("India", 1380004385);
+countryPopulationMap.set("Türkiye", 84733150);
+countryPopulationMap.set("Indonesia", 274795584);
+countryPopulationMap.set("México", 129528514);
+countryPopulationMap.set("Deutschland", 83902518);
+countryPopulationMap.set("Canada", 37887917);
+countryPopulationMap.set("España", 46762763);
+countryPopulationMap.set("France", 65339853);
+countryPopulationMap.set("Nederland", 17152286);
+countryPopulationMap.set("Italia", 60420872);
+countryPopulationMap.set("South Africa", 59649189);
+countryPopulationMap.set("Argentina", 45385180);
+countryPopulationMap.set("Malaysia", 32554794);
+countryPopulationMap.set("Germany", 83902518);
+countryPopulationMap.set("Colombia", 51130265);
+countryPopulationMap.set("Australia", 25634726);
+countryPopulationMap.set("Pakistan", 222833568);
+
+
 var usRelative;
 var ukRelative;
 var brasilRelative;
@@ -73,6 +97,13 @@ try {
         // Get Most active screen_name. It takes a moment to retrieve it.
         dbo.collection("Streamed_Locations").find({}).sort({count: -1}).toArray(function(err, result4) {
           streamed_Locations = result4.splice(0, 10);
+          countryPopulationTweets = [];
+          for(var i=0; i<streamed_Locations.length; i++) {
+            if(result4[i] != undefined || null) {
+              countryPopulationTweets.push({"country": streamed_Locations[i].country, "count": (Math.round((result4[i].count / countryPopulationMap.get(streamed_Locations[i].country) * 1000000) * 100) / 100)})
+            }
+            
+          }
           db.close();
         });
     });
@@ -97,6 +128,10 @@ app.get('/getLanguageCount', function(req, res) {
 
 app.get('/getCountryCount', function(req, res) {
   res.send(countryCount);
+})
+
+app.get('/getStreamedLocationsRelativePopulation', function(req, res) {
+  res.send(countryPopulationTweets);
 })
 
 app.get('/getCountryCountRelative', function(req, res) {
